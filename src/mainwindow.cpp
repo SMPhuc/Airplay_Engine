@@ -85,7 +85,7 @@ QString MainWindow::machineArgumentsPath() const {
     if (programDataPath.isEmpty()) {
         programDataPath = "C:/ProgramData";
     }
-    return programDataPath + "/uxplay-windows/arguments.txt";
+    return programDataPath + "/Airplay_Engine/arguments.txt";
 }
 
 QString MainWindow::activeArgumentsPath() const {
@@ -119,7 +119,7 @@ void MainWindow::ensureSettingsFileExists() {
     QFile file(userArgumentsPath());
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
-        out << "-n uxplay-windows -nh";
+        out << "-n Airplay_Engine -nh";
         file.close();
     }
 }
@@ -147,11 +147,11 @@ QStringList MainWindow::getArgumentsFromFile() {
 
     qWarning().noquote()
         << "[arguments] Unable to read the selected file; using built-in defaults.";
-    return QStringList() << "-n" << "uxplay-windows" << "-nh";
+    return QStringList() << "-n" << "Airplay_Engine" << "-nh";
 }
 
 void MainWindow::setupUI() {
-    setWindowTitle("uxplay-windows");
+    setWindowTitle("Airplay_Engine");
     setWindowIcon(QApplication::windowIcon());
     setFixedSize(300, 260);
 
@@ -170,7 +170,7 @@ void MainWindow::setupUI() {
     connect(m_bleCheckbox, &QCheckBox::toggled, this, &MainWindow::toggleBle);
     layout->addWidget(m_bleCheckbox);
 
-    m_autostartCheckbox = new QCheckBox("Open uxplay-windows at login", this);
+    m_autostartCheckbox = new QCheckBox("Open Airplay_Engine at login", this);
     m_autostartCheckbox->setChecked(isAutostartEnabled());
     connect(m_autostartCheckbox, &QCheckBox::toggled,
             this, &MainWindow::toggleAutostart);
@@ -270,7 +270,7 @@ void MainWindow::toggleBle(bool checked) {
 
     settings.setValue("ble_enabled", checked);
     
-    m_tray->showMessage("uxplay-windows", "Please restart the uxplay-windows to apply changes.\n(Right-click the Tray Icon)", 
+    m_tray->showMessage("Airplay_Engine", "Please restart the Airplay_Engine to apply changes.\n(Right-click the Tray Icon)", 
                         QSystemTrayIcon::Information, 3000);
 }
 
@@ -281,7 +281,7 @@ void MainWindow::toggleForceFullscreen(bool checked) {
     }
 
     settings.setValue("force_fs_enabled", checked);
-    m_tray->showMessage("uxplay-windows", "Please restart the uxplay-windows to apply changes.\n(Right-click the Tray Icon)", 
+    m_tray->showMessage("Airplay_Engine", "Please restart the Airplay_Engine to apply changes.\n(Right-click the Tray Icon)", 
                         QSystemTrayIcon::Information, 3000);
 }
 
@@ -295,7 +295,7 @@ void MainWindow::onRendererChanged(int /*index*/) {
     if (saved == mode) return;
 
     settings.setValue("renderer_mode", mode);
-    m_tray->showMessage("uxplay-windows", "Please restart the uxplay-windows to apply changes.\n(Right-click the Tray Icon)", 
+    m_tray->showMessage("Airplay_Engine", "Please restart the Airplay_Engine to apply changes.\n(Right-click the Tray Icon)", 
                         QSystemTrayIcon::Information, 3000);
 }
 
@@ -442,16 +442,16 @@ void MainWindow::toggleAutostart(bool checked) {
 
 bool MainWindow::isAutostartEnabled() const {
     QSettings reg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-    return reg.contains("uxplay-windows");
+    return reg.contains("Airplay_Engine");
 }
 
 void MainWindow::setAutostart(bool enabled) {
     QSettings reg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     if (enabled) {
         QString path = QDir::toNativeSeparators(QApplication::applicationFilePath());
-        reg.setValue("uxplay-windows", "\"" + path + "\"");
+        reg.setValue("Airplay_Engine", "\"" + path + "\"");
     } else {
-        reg.remove("uxplay-windows");
+        reg.remove("Airplay_Engine");
     }
 }
 
