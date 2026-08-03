@@ -1,4 +1,4 @@
-name: build uxplay-windows x64
+name: build Airplay_Engine x64
 
 on:
   push:
@@ -82,6 +82,6 @@ jobs:
       - name: upload x64 artifacts
         uses: actions/upload-artifact@v5
         with:
-          name: uxplay-windows-x64
+          name: Airplay_Engine-x64
           path: out/x64/artifacts/*
           if-no-files-found: error
