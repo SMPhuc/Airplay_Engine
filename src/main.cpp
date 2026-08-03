@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     app.setOrganizationName("leapbtw");
-    app.setApplicationName("uxplay-windows");
+    app.setApplicationName("Airplay_Engine");
     app.setWindowIcon(QIcon(QApplication::applicationDirPath() + "/resources/icon.ico"));
     
     QString appPath = QApplication::applicationDirPath();
