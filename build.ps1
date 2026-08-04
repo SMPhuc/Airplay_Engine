@@ -1,4 +1,4 @@
-<# Single entry point for preparing, building, packaging, and testing the x64 build.
+﻿<# Single entry point for preparing, building, packaging, and testing the x64 build.
    Produces the portable bundle and MSI through the same workflow locally and in CI. #>
 [CmdletBinding()]
 param(
@@ -340,8 +340,8 @@ function Stage-Runtime {
         Out-Null
 
     Copy-Item `
-        (Join-Path $buildDir "uxplay-windows.exe") `
-        (Join-Path $stageDir "uxplay-windows.exe") `
+        (Join-Path $buildDir "Airplay_Engine.exe") `
+        (Join-Path $stageDir "Airplay_Engine.exe") `
         -Force
     Copy-Item `
         (Join-Path $beaconOutDir "dist\uxplay-bluetooth-beacon.exe") `
@@ -380,7 +380,7 @@ function Stage-Runtime {
             "--no-translations",
             "--no-compiler-runtime",
             "--dir", $stageDir,
-            (Join-Path $stageDir "uxplay-windows.exe")
+            (Join-Path $stageDir "Airplay_Engine.exe")
         )
 
     $gstPluginDir = Join-Path $prefix "lib\gstreamer-1.0"
@@ -514,7 +514,7 @@ function Ensure-Wix {
 
 function Build-Artifacts {
     New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
-    $zip = Join-Path $artifactDir "uxplay-windows-x64-portable.zip"
+    $zip = Join-Path $artifactDir "Airplay_Engine-x64-portable.zip"
     if (Test-Path -LiteralPath $zip) {
         Remove-Item -LiteralPath $zip -Force
     }
@@ -526,7 +526,7 @@ function Build-Artifacts {
     if (-not $SkipInstaller) {
         Ensure-Wix
         $dotnet = (Get-Command dotnet.exe -ErrorAction Stop).Source
-        $msi = Join-Path $artifactDir "uxplay-windows-x64.msi"
+        $msi = Join-Path $artifactDir "Airplay_Engine-x64.msi"
         $wixPdb = [IO.Path]::ChangeExtension($msi, ".wixpdb")
         if (Test-Path -LiteralPath $wixPdb) {
             Remove-Item -LiteralPath $wixPdb -Force
